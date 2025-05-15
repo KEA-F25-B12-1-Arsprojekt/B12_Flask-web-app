@@ -9,8 +9,10 @@ now = datetime.now()
 dt_string = now.strftime("%d/%m/%H:%M")
 print(dt_string)
 
+table = """ CREATE TABLE IF NOT EXISTS EMPLOYEE_TIME """
+cursor.execute(table)
 # Connecting to sqlite
-conn = sqlite3.connect('Sqlite3test.db')
+conn = sqlite3.connect('user_time.db')
 
 # Creating a cursor object using the 
 # cursor() method

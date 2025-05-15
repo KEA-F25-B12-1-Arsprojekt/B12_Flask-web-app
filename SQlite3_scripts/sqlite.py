@@ -1,14 +1,15 @@
 # Import module
 import sqlite3
 
-set  
-
 # Connecting to sqlite
-conn = sqlite3.connect('Sqlite3test.db')
+conn = sqlite3.connect('users.db')
 
 # Creating a cursor object using the 
 # cursor() method
 cursor = conn.cursor()
+
+table = """ CREATE TABLE IF NOT EXISTS EMPLOYEEID """
+cursor.execute(table)
 
 # Queries to INSERT records.
 def Insert_values(ID, PASSWORD, NAME):
