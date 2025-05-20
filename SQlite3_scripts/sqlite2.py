@@ -1,12 +1,12 @@
 # Import module
 from datetime import datetime
 import sqlite3
-
+import random
 # datetime object containing current date and time
 now = datetime.now()
  
 # dd/mm/YY H:M:S
-dt_string = now.strftime("%d/%m/%H:%M")
+dt_string = now.strftime("%Y/%d/%m/%H:%M")
 print(dt_string)
 
 # Connecting to sqlite
@@ -16,12 +16,9 @@ conn = sqlite3.connect('user_time.db')
 # cursor() method
 cursor = conn.cursor()
 
-table = """ CREATE TABLE IF NOT EXISTS EMPLOYEE_TIME """
-cursor.execute(table)
-
 # Queries to INSERT records.
-def Insert_values(ID, TIME, NAME):
-    cursor.execute(''' INSERT INTO EMPLOYEE_TIME (ID, TIME, NAME) VALUES (?, ?, ?)''', (ID, TIME, NAME))
+def Insert_values(ID, EID, DATE, LOGIN, LOGOUT):
+    cursor.execute(''' INSERT INTO EMPLOYEE_TIME (ID, EID, DATE, LOGIN, LOGOUT) VALUES (?, ?, ?,?,?)''', (ID, EID, DATE, LOGIN, LOGOUT))
 
 # Display data inserted
 print("Data Inserted in the table: ")
@@ -29,12 +26,16 @@ data=cursor.execute('''SELECT * FROM EMPLOYEE_TIME''')
 for row in data:
     print(row)
 
-E_ID = 'bomb'
-E_TIME = dt_string 
-E_NAME = 'dumbo'
+R_ID = random.randint(1000, 8000)
+E_ID = 'SDSDSDSDS'
+E_DATE = now.strftime('%Y/%m/%d')
+E_LOGIN = now.strftime('%H:%M')
+E_LOGOUT = 0
 
-Insert_values(E_ID, E_TIME , E_NAME)
+Insert_values(R_ID, E_ID, E_DATE, E_LOGIN, E_LOGOUT)
 
 # Commit your changes in 
 # the database    
 conn.commit()
+
+conn.close()
