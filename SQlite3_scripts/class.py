@@ -80,19 +80,19 @@ class Lg_update:
     
 
 single_selector = Lg_update("ID")
-if id != ("ID"): 
+if id != "ID": 
     def Insert_values(ID, DATE, LOGIN, LOGOUT):
         cursor.execute(''' INSERT INTO EMPLOYEE_TIME (ID, DATE, LOGIN, LOGOUT) VALUES (?, ?, ?, ?)''', (ID, DATE, LOGIN, LOGOUT))
 elif id == "ID" and LOGIN == 'None' and LOGOUT == 'None':
     """
     Update EMPLOYEE_TIME
-    SET LOGIN = now.strftime("%H:%m")
+    SET LOGIN = now.strftime("%H:%M")
     WHERE id=ID
     """
 elif LOGOUT == 'None' and LOGIN != 'None':
     """
     Update EMPLOYEE_TIME
-    SET LOGOUT = now.strftime("%H:%m")
+    SET LOGOUT = now.strftime("%H:%M")
     WHERE id=ID
     """
 
