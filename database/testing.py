@@ -36,7 +36,7 @@ def get_employee_record(emp_id, db_path=DB_PATH):
     Retrieve a record from EMPLOYEE_TIME for the given emp_id.
     Assumes that each employee appears only once in the table.
     """
-    conn = sqlite3.connect(db_path)sssssssss
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     query = "SELECT * FROM EMPLOYEE_TIME WHERE ID = ?"
     cursor.execute(query, (emp_id,))
