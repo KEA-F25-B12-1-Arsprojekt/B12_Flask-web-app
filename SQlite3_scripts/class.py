@@ -90,38 +90,32 @@ def update_record_new_day(emp_id, date, login, db_path=DB_PATH):
     conn.commit()
     conn.close()
 
-def main():
+
     now = datetime.now()
     today = now.strftime('%Y/%d/%m') 
     current_time = now.strftime("%H:%M")
     empty_marker = 'empty'
     
-    if current_user.is_authenticated:
-        print(f"Logged-in user: {current_user.username}")
-    else:
-        print("no user is logged in.")
-    
-    return current_user.username
-    
     emp_id = current_user.username
     
+def handle_employee_check_in(emp_id, today, current_time, empty_marker):
     record = get_employee_record(emp_id)
-    
+
     if record is None:
-        # er ikke i database
+        # Employee not found in the database
         print(f"Employee with ID {emp_id} not found. Inserting a new record for today.")
         insert_values(emp_id, today, current_time, empty_marker)
     else:
-        # Since we assume one record per employee, get the stored date.
-        record_date = record[1]  # Assuming the DATE column is at index 1.
+        # Get stored date
+        record_date = record[1]  # Assuming DATE column is at index 1
         if record_date != today:
-            # The employee is logging in on a new day: update the record to reflect today.
+            # Employee is logging in on a new day
             print(f"Employee ID {emp_id} is logging in on a new day. Updating DATE, LOGIN and resetting LOGOUT.")
             update_record_new_day(emp_id, today, current_time)
         else:
-            # The record is for today. Update according to current state of LOGIN and LOGOUT.
+            # Update record based on current state of LOGIN and LOGOUT
             current_login = record[2]  # LOGIN column
-            current_logout = record[3] # LOGOUT column
+            current_logout = record[3]  # LOGOUT column
             if current_login == empty_marker and current_logout == empty_marker:
                 print(f"Employee ID {emp_id} has no LOGIN for today. Setting LOGIN time.")
                 update_login(emp_id, current_time)
@@ -130,10 +124,14 @@ def main():
                 update_logout(emp_id, current_time)
             else:
                 print(f"Employee ID {emp_id} already has both LOGIN and LOGOUT times filled for today.")
+
+# Example usage when a button is pressed
+button_pressed = True  # Replace this with the actual button press event logic
+if button_pressed:
+    handle_employee_check_in(emp_id, today, current_time, empty_marker)
+
     
     # For demonstration: fetch and print all employee IDs.
     selector = Lg_update("ID")
     print("Employee IDs in the table:", selector.fetch_columns())
 
-if __name__ == "__main__":
-    main()
