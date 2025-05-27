@@ -1,6 +1,7 @@
 import sqlite3
 import random
 from datetime import datetime
+from flask_login import current_user
 
 DB_PATH = "user_time.db"
 
@@ -95,8 +96,14 @@ def main():
     current_time = now.strftime("%H:%M")
     empty_marker = 'empty'
     
-    # Random emp id skal ændres 
-    emp_id = 1000
+    if current_user.is_authenticated:
+        print(f"Logged-in user: {current_user.username}")
+    else:
+        print("no user is logged in.")
+    
+    return current_user.username
+    
+    emp_id = current_user.username
     
     record = get_employee_record(emp_id)
     

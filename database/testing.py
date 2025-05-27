@@ -1,6 +1,8 @@
 import sqlite3
 import random
 from datetime import datetime
+from flask_login import current_user
+
 
 DB_PATH = "user_time.db"
 
@@ -97,7 +99,15 @@ def main():
     
     # For demonstration, we use a random employee ID.
     # In real usage, you'd likely receive the employee ID from login credentials.
-    emp_id = random.randint(1000, 8000)
+
+    if current_user.is_authenticated:
+        print(f"Logged-in user: {current_user.username}")
+    else:
+        print("no user is logged in.")
+    
+    return current_user
+    
+    emp_id = current_user
     
     record = get_employee_record(emp_id)
     
