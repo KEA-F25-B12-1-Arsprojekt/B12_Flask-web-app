@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegistrationForm, LoginForm
-from sqlscripts import handle_employee_check_in
+from sqlscripts import handle_employee_check_in, get_employee_record
 
 
 app = Flask(__name__)
@@ -54,7 +54,18 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    emp_id = current_user.username
+    record = get_employee_record(emp_id)  # Fetch user’s check-in record
+
+    user_checked_in = False
+    if record:
+        current_login = record[2]  # LOGIN column
+        current_logout = record[3]  # LOGOUT column
+        if current_login != 'empty' and current_logout == 'empty':
+            user_checked_in = True  # User is currently checked in
+
+    return render_template('dashboard.html', user_checked_in=user_checked_in)
+
 
 @app.route("/signup", methods = ["GET", "POST"])
 @login_required
