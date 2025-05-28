@@ -70,14 +70,15 @@ def dashboard():
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # Fetch all employees who are checked in (LOGOUT is still 'empty') along with their login times
-    query = "SELECT ID, LOGIN FROM EMPLOYEE_TIME WHERE LOGOUT = 'empty'"
+    # Fetch all employees who are checked in (LOGOUT is still 'empty') along with their login times & dates
+    query = "SELECT ID, DATE, LOGIN FROM EMPLOYEE_TIME WHERE LOGOUT = 'empty'"
     cursor.execute(query)
-    checked_in_users = cursor.fetchall()  # List of tuples (ID, LOGIN)
+    checked_in_users = cursor.fetchall()  # List of tuples (ID, DATE, LOGIN)
 
     conn.close()
     
     return render_template('dashboard.html', user_checked_in=user_checked_in, checked_in_users=checked_in_users)
+
 
 
 
