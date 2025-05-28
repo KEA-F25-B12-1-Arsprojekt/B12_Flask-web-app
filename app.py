@@ -12,13 +12,13 @@ app.config["SECRET_KEY"] = "3415a2ef17b0f9ebe00f0a7b08d07e64122ca753427e4ece0d8c
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
-login_manager.login_view = "login"  # Redirect
+login_manager.login_view = "login"
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
-    firstname = db.Column(db.String(100), nullable=False)  # Add this if missing
-    lastname = db.Column(db.String(100), nullable=False)   # Add this if missing
+    firstname = db.Column(db.String(100), nullable=False)
+    lastname = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
 @login_manager.user_loader
