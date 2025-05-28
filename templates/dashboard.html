@@ -4,4 +4,10 @@
 {% block content %}
 this is the dashboard? get real nerd
 <a href="{{ url_for('signup') }}">Create User</a>
+
+<form method="POST" action="{{ url_for('check_in_out') }}">
+    <button type="submit">Check In/Check Out</button>
+</form>
+
+
 {% endblock %}

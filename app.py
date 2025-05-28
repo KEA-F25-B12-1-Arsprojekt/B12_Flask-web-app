@@ -1,9 +1,10 @@
 # imports
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegistrationForm, LoginForm
+from sqlscripts import handle_employee_check_in
 
 
 app = Flask(__name__)
@@ -71,6 +72,16 @@ def signup():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route("/check-in-out", methods=["POST"])
+@login_required
+def check_in_out():
+    emp_id = current_user.username  # Get logged-in user's ID
+    handle_employee_check_in(emp_id)  # Only pass emp_id, let class.py handle timestamps
+
+    flash("Check-in/out recorded successfully!", "success")
+    return redirect(url_for("dashboard"))
+
 
 app.run(debug=True)
 2
