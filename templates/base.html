@@ -10,6 +10,18 @@
     <title>{% block title %}EMS{% endblock %}</title>
 </head>
 
+{% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+    <div class="alert-container">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
