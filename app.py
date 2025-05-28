@@ -3,25 +3,55 @@ from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from forms import RegistrationForm, LoginForm
 
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+app.config["SECRET_KEY"] = "3415a2ef17b0f9ebe00f0a7b08d07e64122ca753427e4ece0d8c46d729d8c536" # Change later (make random?)
 
+db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = "login"  # Redirect
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    firstname = db.Column(db.String(100), nullable=False)  # Add this if missing
+    lastname = db.Column(db.String(100), nullable=False)   # Add this if missing
+    password = db.Column(db.String(100), nullable=False)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # app routing and run
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/login')
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username = form.username.data).first()
+        if user and check_password_hash(user.password, form.password.data):
+            login_user(user)
+            flash("Login successful!", "success")
+            return redirect(url_for("dashboard"))
+        else:
+            flash("Invalid username or password", "danger")
+    return render_template("login.html", form = form)
 
-@app.route('/logout')
+@app.route("/logout")
+@login_required
 def logout():
-    return render_template('logout.html')
+    logout_user()
+    flash("You have been logged out.", "info")
+    return redirect(url_for("login"))
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
     return render_template('dashboard.html')
 
