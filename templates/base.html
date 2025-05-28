@@ -22,6 +22,16 @@
   {% endif %}
 {% endwith %}
 
+<script>
+  setTimeout(() => {
+    const alerts = document.querySelectorAll(".alert");
+    alerts.forEach(alert => {
+      alert.style.opacity = "0";
+      setTimeout(() => alert.style.display = "none", 500);
+    });
+  }, 2500);
+</script>
+
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
