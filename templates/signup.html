@@ -2,5 +2,15 @@
 {% block title %}EMS{% endblock %}
 
 {% block content %}
-Sign up a user lol
+<body>
+    <h2>Register</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.username.label }} {{ form.username() }} <br>
+        {{ form.firstname.label }} {{ form.firstname() }} <br>
+        {{ form.lastname.label }} {{ form.lastname() }} <br>
+        {{ form.password.label }} {{ form.password() }} <br>
+        {{ form.submit() }}
+    </form>
+</body>
 {% endblock %}
