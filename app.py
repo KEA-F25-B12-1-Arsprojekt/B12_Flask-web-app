@@ -56,6 +56,7 @@ def dashboard():
     return render_template('dashboard.html')
 
 @app.route("/signup", methods = ["GET", "POST"])
+@login_required
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -63,7 +64,7 @@ def signup():
         new_user = User(username = form.username.data, firstname = form.firstname.data, lastname = form.lastname.data, password = hashed_password)
         db.session.add(new_user)
         db.session.commit()
-        flash("Registration successful! Please log in.", "success")
+        flash("Registration successful!", "success")
         return redirect(url_for("login"))
     return render_template("signup.html", form = form)
 
