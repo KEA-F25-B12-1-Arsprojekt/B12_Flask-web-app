@@ -2,7 +2,6 @@
 {% block title %}EMS Dashboard{% endblock %}
 
 {% block content %}
-this is the dashboard? get real nerd
 <a href="{{ url_for('signup') }}">Create User</a>
 
 <form method="POST" action="{{ url_for('check_in_out') }}">
@@ -13,6 +12,16 @@ this is the dashboard? get real nerd
     {% endif %}
 </form>
 
+<h5>Currently Checked In:</h5>
+{% if checked_in_users %}
+    <ul>
+        {% for user in checked_in_users %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No employees are currently checked in.</p>
+{% endif %}
 
 
 {% endblock %}
