@@ -15,13 +15,15 @@
 <h5>Currently Checked In:</h5>
 {% if checked_in_users %}
     <ul>
-        {% for user in checked_in_users %}
-            <li>{{ user.username }}</li>
+        {% for user, login_time in checked_in_users %}
+            <li>{{ user }} - Checked in at {{ login_time }}</li>
         {% endfor %}
     </ul>
 {% else %}
     <p>No employees are currently checked in.</p>
 {% endif %}
+
+
 
 
 {% endblock %}

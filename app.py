@@ -5,6 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegistrationForm, LoginForm
 from sqlscripts import handle_employee_check_in, get_employee_record
+import sqlite3
 
 
 app = Flask(__name__)
@@ -12,6 +13,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 app.config["SECRET_KEY"] = "3415a2ef17b0f9ebe00f0a7b08d07e64122ca753427e4ece0d8c46d729d8c536" # Change later (make random?)
 
 db = SQLAlchemy(app)
+db_path = "user_time.db"
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
@@ -63,8 +65,21 @@ def dashboard():
         current_logout = record[3]  # LOGOUT column
         if current_login != 'empty' and current_logout == 'empty':
             user_checked_in = True  # User is currently checked in
+    
+    # Connect to SQLite database using correct DB path
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
 
-    return render_template('dashboard.html', user_checked_in=user_checked_in)
+    # Fetch all employees who are checked in (LOGOUT is still 'empty') along with their login times
+    query = "SELECT ID, LOGIN FROM EMPLOYEE_TIME WHERE LOGOUT = 'empty'"
+    cursor.execute(query)
+    checked_in_users = cursor.fetchall()  # List of tuples (ID, LOGIN)
+
+    conn.close()
+    
+    return render_template('dashboard.html', user_checked_in=user_checked_in, checked_in_users=checked_in_users)
+
+
 
 
 @app.route("/signup", methods = ["GET", "POST"])
