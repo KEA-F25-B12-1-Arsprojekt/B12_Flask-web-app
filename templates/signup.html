@@ -2,7 +2,17 @@
 {% block title %}EMS{% endblock %}
 
 {% block content %}
-<body>
+<section class="vh-100" style="background-color: rgb(233, 233, 233);">
+  <div class="container py-5 h-75">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-5">
+        <div class="card" style="border-radius: 0.5rem;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+
     <h2>Register</h2>
     <form method="POST">
         {{ form.hidden_tag() }}
@@ -12,5 +22,5 @@
         {{ form.password.label }} {{ form.password() }} <br>
         {{ form.submit() }}
     </form>
-</body>
+</section>
 {% endblock %}
