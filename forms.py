@@ -1,3 +1,5 @@
+# Flask WT Forms setup for registering a user, and logging in a user
+# Imports
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length
