@@ -44,7 +44,8 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                 <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
-              </li>    
+              </li>
+                    <!-- Conditional navbar -->    
                     {% if not current_user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/login' %}active{% endif %}" href="/login">Login</a>
