@@ -1,4 +1,4 @@
-# imports
+# Imports
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -28,7 +28,7 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# app routing and run
+# App routing
 @app.route('/')
 def home():
     return render_template('index.html')
