@@ -5,33 +5,6 @@ from flask_login import current_user
 
 DB_PATH = "user_time.db"
 
-class Lg_update:
-    def __init__(self, columns, db_path=DB_PATH):
-        """
-        Initialize with column name(s) and database path.
-        Accepts either a single string or a list of strings.
-        """
-        if isinstance(columns, str):
-            self.columns = [columns]
-        elif isinstance(columns, list):
-            self.columns = columns
-        else:
-            raise ValueError("columns must be a string or a list of strings")
-        self.db_path = db_path
-
-    def fetch_columns(self):
-        """
-        Build and execute a query to fetch the specified columns from EMPLOYEE_TIME.
-        """
-        columns_str = ", ".join(self.columns)
-        query = f"SELECT {columns_str} FROM EMPLOYEE_TIME"
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        cursor.execute(query)
-        result = cursor.fetchall()
-        conn.close()
-        return result
-
 def get_employee_record(emp_id, db_path=DB_PATH):
     """
     Retrieve a record from EMPLOYEE_TIME for the given emp_id.
@@ -129,15 +102,3 @@ def handle_employee_check_in(emp_id):
                 update_logout(emp_id, current_time)
             else:
                 print(f"Employee ID {emp_id} already has both LOGIN and LOGOUT times filled for today.")
-
-'''
-# Example usage when a button is pressed
-button_pressed = True  # Replace this with the actual button press event logic
-if button_pressed:
-    handle_employee_check_in(emp_id, today, current_time, empty_marker)
-
-    
-    # For demonstration: fetch and print all employee IDs.
-    selector = Lg_update("ID")
-    print("Employee IDs in the table:", selector.fetch_columns())
-'''

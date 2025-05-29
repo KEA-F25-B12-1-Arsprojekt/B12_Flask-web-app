@@ -79,10 +79,6 @@ def dashboard():
     
     return render_template('dashboard.html', user_checked_in=user_checked_in, checked_in_users=checked_in_users)
 
-
-
-
-
 @app.route("/signup", methods = ["GET", "POST"])
 @login_required
 def signup():
