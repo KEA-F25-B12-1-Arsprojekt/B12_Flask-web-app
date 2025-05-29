@@ -1,3 +1,5 @@
+#Set-up for the User class model for Flask-login, used to create the database users.db
+#imports
 from flask_login import UserMixin
 from app import db
 
