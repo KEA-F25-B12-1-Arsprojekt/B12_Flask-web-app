@@ -66,11 +66,10 @@ def dashboard():
         if current_login != 'empty' and current_logout == 'empty':
             user_checked_in = True  # User is currently checked in
     
-    # Connect to SQLite database using correct DB path
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # Fetch all employees who are checked in (LOGOUT is still 'empty') along with their login times & dates
+    # Fetch checked in users (users with empty logouts)
     query = "SELECT ID, DATE, LOGIN FROM EMPLOYEE_TIME WHERE LOGOUT = 'empty'"
     cursor.execute(query)
     checked_in_users = cursor.fetchall()  # List of tuples (ID, DATE, LOGIN)
@@ -99,8 +98,8 @@ def about():
 @app.route("/check-in-out", methods=["POST"])
 @login_required
 def check_in_out():
-    emp_id = current_user.username  # Get logged-in user's ID
-    handle_employee_check_in(emp_id)  # Only pass emp_id, let class.py handle timestamps
+    emp_id = current_user.username  # Get current user
+    handle_employee_check_in(emp_id)  # Pass emp_id to sqlscripts.py
 
     flash("Check-in/out recorded successfully!", "success")
     return redirect(url_for("dashboard"))
