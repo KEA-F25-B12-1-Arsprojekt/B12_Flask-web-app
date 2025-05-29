@@ -1,5 +1,4 @@
 import sqlite3
-import random
 from datetime import datetime
 from flask_login import current_user
 
@@ -80,18 +79,18 @@ def handle_employee_check_in(emp_id):
     record = get_employee_record(emp_id)
 
     if record is None:
-        # Employee not found in the database
+        # Check if employee exists in database
         print(f"Employee with ID {emp_id} not found. Inserting a new record for today.")
         insert_values(emp_id, today, current_time, empty_marker)
     else:
         # Get stored date
-        record_date = record[1]  # Assuming DATE column is at index 1
+        record_date = record[1]
         if record_date != today:
-            # Employee is logging in on a new day
+            # New employee login
             print(f"Employee ID {emp_id} is logging in on a new day. Updating DATE, LOGIN and resetting LOGOUT.")
             update_record_new_day(emp_id, today, current_time)
         else:
-            # Update record based on current state of LOGIN and LOGOUT
+            # Update based on current state (LOGIN and LOGOUT), give terminal updates
             current_login = record[2]  # LOGIN column
             current_logout = record[3]  # LOGOUT column
             if current_login == empty_marker and current_logout == empty_marker:
