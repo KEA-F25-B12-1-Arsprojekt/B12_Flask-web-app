@@ -72,7 +72,7 @@ def dashboard():
     # Fetch checked in users (users with empty logouts)
     query = "SELECT ID, DATE, LOGIN FROM EMPLOYEE_TIME WHERE LOGOUT = 'empty'"
     cursor.execute(query)
-    checked_in_users = cursor.fetchall()  # List of tuples (ID, DATE, LOGIN)
+    checked_in_users = cursor.fetchall()  # (ID, DATE, LOGIN)
 
     conn.close()
     
