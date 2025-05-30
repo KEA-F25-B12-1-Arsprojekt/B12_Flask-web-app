@@ -18,11 +18,11 @@ login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
 class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    firstname = db.Column(db.String(100), nullable=False)
-    lastname = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(100), unique = True, nullable = False)
+    firstname = db.Column(db.String(100), nullable = False)
+    lastname = db.Column(db.String(100), nullable = False)
+    password = db.Column(db.String(100), nullable = False)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -57,7 +57,7 @@ def logout():
 @login_required
 def dashboard():
     emp_id = current_user.username
-    record = get_employee_record(emp_id)  # Fetch user’s check-in record
+    record = get_employee_record(emp_id)  # Fetch check-in record
 
     user_checked_in = False
     if record:
@@ -76,7 +76,7 @@ def dashboard():
 
     conn.close()
     
-    return render_template('dashboard.html', user_checked_in=user_checked_in, checked_in_users=checked_in_users)
+    return render_template('dashboard.html', user_checked_in = user_checked_in, checked_in_users = checked_in_users)
 
 @app.route("/signup", methods = ["GET", "POST"])
 @login_required
@@ -105,5 +105,5 @@ def check_in_out():
     return redirect(url_for("dashboard"))
 
 
-app.run(debug=True)
+app.run(debug=True) # Remove when ready for deployment
 2
