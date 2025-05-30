@@ -4,7 +4,7 @@ from flask_login import current_user
 
 DB_PATH = "user_time.db"
 
-def get_employee_record(emp_id, db_path=DB_PATH):
+def get_employee_record(emp_id, db_path = DB_PATH):
     """
     Retrieve a record from EMPLOYEE_TIME for the given emp_id.
     Assumes that each employee appears only once in the table.
@@ -17,7 +17,7 @@ def get_employee_record(emp_id, db_path=DB_PATH):
     conn.close()
     return record
 
-def insert_values(emp_id, date, login, logout, db_path=DB_PATH):
+def insert_values(emp_id, date, login, logout, db_path = DB_PATH):
     """
     Insert a new record into EMPLOYEE_TIME.
     """
@@ -28,7 +28,7 @@ def insert_values(emp_id, date, login, logout, db_path=DB_PATH):
     conn.commit()
     conn.close()
 
-def update_login(emp_id, login_value, db_path=DB_PATH):
+def update_login(emp_id, login_value, db_path = DB_PATH):
     """
     Update the LOGIN field for an existing employee.
     """
@@ -39,7 +39,7 @@ def update_login(emp_id, login_value, db_path=DB_PATH):
     conn.commit()
     conn.close()
 
-def update_logout(emp_id, logout_value, db_path=DB_PATH):
+def update_logout(emp_id, logout_value, db_path = DB_PATH):
     """
     Update the LOGOUT field for an existing employee.
     """
@@ -50,7 +50,7 @@ def update_logout(emp_id, logout_value, db_path=DB_PATH):
     conn.commit()
     conn.close()
 
-def update_record_new_day(emp_id, date, login, db_path=DB_PATH):
+def update_record_new_day(emp_id, date, login, db_path = DB_PATH):
     """
     For an existing employee logging in on a new day,
     update the DATE and LOGIN fields, and reset LOGOUT to 'empty'.
